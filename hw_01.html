@@ -382,44 +382,63 @@ summary {
 
 <div id="task-1" class="section level2">
 <h2>Task 1</h2>
-<pre class="r"><code>mh_distance &lt;- function(x, y) {
+<pre class="r"><code>mh_distance &lt;- function(x, y){
   if(typeof(x) != typeof(y)){
-    warning(&quot;x and y different vector type&quot;)
+    warning(&quot;x and y different vector types&quot;)
     return(-1)
   }
-  if(as.NA(x) | as.NA(y) | as.NaN(x) | as.NaN(y)){
-    warning(&quot;x or y NA or NaN&quot;)
+  if(is.na(x) == TRUE || is.na(y) == TRUE || 
+     is.nan(x) == TRUE || is.nan(y) == TRUE){
+    warning(&quot;x or y is NA or NaN&quot;)
     return(-1)
   }
-  if(nchar(x) != nchar(y)){
+  if(is.infinite(x) == TRUE || is.infinite(y) == TRUE){
+    warning(&quot;x or y is an infinite value&quot;)
+    return(-1)
+  }
+  if(nchar(x) != nchar(y) &amp; 
+     typeof(x) != &quot;logical&quot;){
     warning(&quot;x and y different character lengths&quot;)
     return(-1)
   }
-  if(as.infinite(x) | as.infinite(y)){
-    warning(&quot;x or y infinite value&quot;)
+  if(is.numeric(x) == TRUE &amp; is.numeric(y) == TRUE){
+    if(x %% 1 != 0 || y %% 1 != 0)
+    warning(&quot;x or y contains a decimal&quot;)
     return(-1)
   }
-  if(&quot;.&quot; %in% as.numeric(x) | &quot;.&quot; %in% as.numeric(y)){
-    warning(&quot;x or y contains decimal value&quot;)
-    return(-1)
-  }
-  x &lt;- unlist(strsplit(x, split = &quot;&quot;))
-  y &lt;- unlist(strsplit(y, split = &quot;&quot;))
-  x == y
-  mhd &lt;- sum(TRUE)
-  return(mhd)
+  if (typeof(x) == &quot;character&quot;)
+    {xasalist = strsplit(x, &quot;&quot;)
+    yasalist = strsplit(y, &quot;&quot;)
+    xasavector = unlist(xasalist)
+    yasavector = unlist(yasalist)
+    numtruefalse = xasavector != yasavector
+    return(sum(numtruefalse, na.rm = TRUE))}
+  if (typeof(x) == &quot;double&quot;)
+    {xchar = toString(x)
+    ychar = toString(y)
+    xasalist = strsplit(xchar, &quot;&quot;)
+    yasalist = strsplit(ychar, &quot;&quot;)
+    xasavector = unlist(xasalist)
+    yasavector = unlist(yasalist)
+    numtruefalse = xasavector != yasavector
+    return(sum(numtruefalse, na.rm = TRUE))}
+  if (typeof(x) == &quot;logical&quot;)
+    {if ((x &amp; y == TRUE) || (x &amp; y == FALSE))
+      {return (0)}
+    return(1)}
 }</code></pre>
 </div>
-<div id="is.finite-is.infinite" class="section level1">
-<h1>is.finite, is.infinite</h1>
 <div id="task-2" class="section level2">
 <h2>Task 2</h2>
-<p><i> Be sure to remove chunk option <code>eval=FALSE</code> in the below code chunks once you create <code>mh_distance()</code>. Do not include this italicized text in your final submission. </i></p>
 <p><strong>Initial test cases</strong> (return a non-negative modified Hamming distance)</p>
-<pre class="r"><code>mh_distance(x = &quot;abc&quot;, y = &quot;abc&quot;)
-mh_distance(x = T, y = FALSE)
-mh_distance(x = &quot;523890&quot;, y = &quot;752839&quot;)
-mh_distance(x = 2341, y = 2350)</code></pre>
+<pre class="r"><code>mh_distance(x = &quot;abc&quot;, y = &quot;abc&quot;)</code></pre>
+<pre><code>[1] 0</code></pre>
+<pre class="r"><code>mh_distance(x = T, y = FALSE)</code></pre>
+<pre><code>[1] 0</code></pre>
+<pre class="r"><code>mh_distance(x = &quot;523890&quot;, y = &quot;752839&quot;)</code></pre>
+<pre><code>[1] 5</code></pre>
+<pre class="r"><code>mh_distance(x = 2341, y = 2350)</code></pre>
+<pre><code>[1] -1</code></pre>
 <p>Added test cases that return a non-negative modified Hamming distance result.</p>
 <pre class="r"><code># additional test cases go here</code></pre>
 <p><strong>Initial test cases</strong> (return values of <code>-1</code>)</p>
@@ -435,12 +454,14 @@ mh_distance(x = 1.5, y = 2.5)</code></pre>
 <p>Consider the pair of vectors <code>s</code> and <code>w</code> given below.</p>
 <pre class="r"><code>s &lt;- c(26, 50123, 456.12, 8, 0)
 w &lt;- c(22, 50000, 451.00, 88, 0)</code></pre>
-<pre class="r"><code># loop goes here</code></pre>
+<pre class="r"><code># loop goes here
+# don&#39;t use unlist, function carried through s and w at same time
+# for loop added, each iteration of that, recall og function
+# just change some things, for each element</code></pre>
 </div>
 <div id="task-4" class="section level2">
 <h2>Task 4</h2>
 <p>Brief write-up goes here…</p>
-</div>
 </div>
 
 

@@ -12,49 +12,58 @@ knitr::opts_chunk$set(echo = TRUE, comment = NA)
 ## Task 1
 
 ```{r mh_distance_function}
-mh_distance <- function(x, y) {
+mh_distance <- function(x, y){
   if(typeof(x) != typeof(y)){
-    warning("x and y different vector type")
+    warning("x and y different vector types")
     return(-1)
   }
-  if(as.NA(x) | as.NA(y) | as.NaN(x) | as.NaN(y)){
-    warning("x or y NA or NaN")
+  if(is.na(x) == TRUE || is.na(y) == TRUE || 
+     is.nan(x) == TRUE || is.nan(y) == TRUE){
+    warning("x or y is NA or NaN")
     return(-1)
   }
-  if(nchar(x) != nchar(y)){
+  if(is.infinite(x) == TRUE || is.infinite(y) == TRUE){
+    warning("x or y is an infinite value")
+    return(-1)
+  }
+  if(nchar(x) != nchar(y) & 
+     typeof(x) != "logical"){
     warning("x and y different character lengths")
     return(-1)
   }
-  if(as.infinite(x) | as.infinite(y)){
-    warning("x or y infinite value")
+  if(is.numeric(x) == TRUE & is.numeric(y) == TRUE){
+    if(x %% 1 != 0 || y %% 1 != 0)
+    warning("x or y contains a decimal")
     return(-1)
   }
-  if("." %in% as.numeric(x) | "." %in% as.numeric(y)){
-    warning("x or y contains decimal value")
-    return(-1)
-  }
-  x <- unlist(strsplit(x, split = ""))
-  y <- unlist(strsplit(y, split = ""))
-  x == y
-  mhd <- sum(TRUE)
-  return(mhd)
+  if (typeof(x) == "character")
+    {xasalist = strsplit(x, "")
+    yasalist = strsplit(y, "")
+    xasavector = unlist(xasalist)
+    yasavector = unlist(yasalist)
+    numtruefalse = xasavector != yasavector
+    return(sum(numtruefalse, na.rm = TRUE))}
+  if (typeof(x) == "double")
+    {xchar = toString(x)
+    ychar = toString(y)
+    xasalist = strsplit(xchar, "")
+    yasalist = strsplit(ychar, "")
+    xasavector = unlist(xasalist)
+    yasavector = unlist(yasalist)
+    numtruefalse = xasavector != yasavector
+    return(sum(numtruefalse, na.rm = TRUE))}
+  if (typeof(x) == "logical")
+    {if ((x & y == TRUE) || (x & y == FALSE))
+      {return (0)}
+    return(1)}
 }
 ```
 
-# is.finite, is.infinite
-
-
 ## Task 2
-
-<i>
-Be sure to remove chunk option `eval=FALSE` in the below code chunks
-once you create `mh_distance()`. Do not include this italicized
-text in your final submission.
-</i>
 
 **Initial test cases** (return a non-negative modified Hamming distance)
 
-```{r eval=FALSE}
+```{r}
 mh_distance(x = "abc", y = "abc")
 mh_distance(x = T, y = FALSE)
 mh_distance(x = "523890", y = "752839")
@@ -94,6 +103,9 @@ w <- c(22, 50000, 451.00, 88, 0)
 
 ```{r}
 # loop goes here
+# don't use unlist, function carried through s and w at same time
+# for loop added, each iteration of that, recall og function
+# just change some things, for each element
 ```
 
 
