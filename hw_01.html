@@ -406,26 +406,30 @@ summary {
     warning(&quot;x or y contains a decimal&quot;)
     return(-1)
   }
-  if (typeof(x) == &quot;character&quot;)
-    {xasalist = strsplit(x, &quot;&quot;)
-    yasalist = strsplit(y, &quot;&quot;)
-    xasavector = unlist(xasalist)
-    yasavector = unlist(yasalist)
-    numtruefalse = xasavector != yasavector
-    return(sum(numtruefalse, na.rm = TRUE))}
-  if (typeof(x) == &quot;double&quot;)
-    {xchar = toString(x)
-    ychar = toString(y)
-    xasalist = strsplit(xchar, &quot;&quot;)
-    yasalist = strsplit(ychar, &quot;&quot;)
-    xasavector = unlist(xasalist)
-    yasavector = unlist(yasalist)
-    numtruefalse = xasavector != yasavector
-    return(sum(numtruefalse, na.rm = TRUE))}
-  if (typeof(x) == &quot;logical&quot;)
-    {if ((x &amp; y == TRUE) || (x &amp; y == FALSE))
-      {return (0)}
-    return(1)}
+   if (typeof(x) == &quot;character&quot;){
+     x_list = strsplit(x, &quot;&quot;)
+     y_list = strsplit(y, &quot;&quot;)
+     x_vector = unlist(x_list)
+     y_vector = unlist(y_list)
+    number = x_vector != y_vector
+    return(sum(number, na.rm = TRUE))
+    }
+  if (typeof(x) == &quot;double&quot;){
+    xchar = as.character(x)
+    ychar = as.character(y)
+    x_list = strsplit(xchar, &quot;&quot;)
+    y_list = strsplit(ychar, &quot;&quot;)
+    x_vector = unlist(x_list)
+    y_vector = unlist(y_list)
+    number = x_vector != y_vector
+    return(sum(number, na.rm = TRUE))
+    }
+  if (typeof(x) == &quot;logical&quot;){
+    if ((x &amp; y == TRUE) || (x &amp; y == FALSE)){
+      return (0)
+      }
+    return(1)
+    }
 }</code></pre>
 </div>
 <div id="task-2" class="section level2">
@@ -454,10 +458,14 @@ mh_distance(x = 1.5, y = 2.5)</code></pre>
 <p>Consider the pair of vectors <code>s</code> and <code>w</code> given below.</p>
 <pre class="r"><code>s &lt;- c(26, 50123, 456.12, 8, 0)
 w &lt;- c(22, 50000, 451.00, 88, 0)</code></pre>
-<pre class="r"><code># loop goes here
-# don&#39;t use unlist, function carried through s and w at same time
-# for loop added, each iteration of that, recall og function
-# just change some things, for each element</code></pre>
+<pre class="r"><code>mh_distance_vectorize &lt;- function(s, w){
+  for(i in 1:length(s)){
+    if(length(s) == length(w)){
+      paste0(&quot;The modified Hamming distance between &quot;, s[i], &quot; and &quot;, w[i],
+             &quot; is &quot;, mh_distance(s[i], w[i]))
+    }
+  }
+}</code></pre>
 </div>
 <div id="task-4" class="section level2">
 <h2>Task 4</h2>

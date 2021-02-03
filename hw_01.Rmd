@@ -36,27 +36,32 @@ mh_distance <- function(x, y){
     warning("x or y contains a decimal")
     return(-1)
   }
-  if (typeof(x) == "character")
-    {xasalist = strsplit(x, "")
-    yasalist = strsplit(y, "")
-    xasavector = unlist(xasalist)
-    yasavector = unlist(yasalist)
-    numtruefalse = xasavector != yasavector
-    return(sum(numtruefalse, na.rm = TRUE))}
-  if (typeof(x) == "double")
-    {xchar = toString(x)
-    ychar = toString(y)
-    xasalist = strsplit(xchar, "")
-    yasalist = strsplit(ychar, "")
-    xasavector = unlist(xasalist)
-    yasavector = unlist(yasalist)
-    numtruefalse = xasavector != yasavector
-    return(sum(numtruefalse, na.rm = TRUE))}
-  if (typeof(x) == "logical")
-    {if ((x & y == TRUE) || (x & y == FALSE))
-      {return (0)}
-    return(1)}
+   if (typeof(x) == "character"){
+     x_list = strsplit(x, "")
+     y_list = strsplit(y, "")
+     x_vector = unlist(x_list)
+     y_vector = unlist(y_list)
+    number = x_vector != y_vector
+    return(sum(number, na.rm = TRUE))
+    }
+  if (typeof(x) == "double"){
+    xchar = as.character(x)
+    ychar = as.character(y)
+    x_list = strsplit(xchar, "")
+    y_list = strsplit(ychar, "")
+    x_vector = unlist(x_list)
+    y_vector = unlist(y_list)
+    number = x_vector != y_vector
+    return(sum(number, na.rm = TRUE))
+    }
+  if (typeof(x) == "logical"){
+    if ((x & y == TRUE) || (x & y == FALSE)){
+      return (0)
+      }
+    return(1)
+    }
 }
+
 ```
 
 ## Task 2
@@ -101,11 +106,15 @@ s <- c(26, 50123, 456.12, 8, 0)
 w <- c(22, 50000, 451.00, 88, 0)
 ```
 
-```{r}
-# loop goes here
-# don't use unlist, function carried through s and w at same time
-# for loop added, each iteration of that, recall og function
-# just change some things, for each element
+```{r vectorized-mh-distance}
+mh_distance_vectorize <- function(s, w){
+  for(i in 1:length(s)){
+    if(length(s) == length(w)){
+      paste0("The modified Hamming distance between ", s[i], " and ", w[i],
+             " is ", mh_distance(s[i], w[i]))
+    }
+  }
+}
 ```
 
 
