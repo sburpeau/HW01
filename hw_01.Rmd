@@ -92,8 +92,11 @@ mh_distance(x = 1.5, y = 2.5)
 
 Added test cases that return a value of `-1`.
 
-```{r}
-# additional test cases go here
+```{r incorrect-test-cases}
+mh_distance(x = 78, y = 78.9)
+mh_distance(x = "fishy", y = "fishes")
+mh_distance(x = NA, y = NaN)
+mh_distance(x = -Inf, y = Inf)
 ```
 
 
@@ -101,7 +104,7 @@ Added test cases that return a value of `-1`.
 
 Consider the pair of vectors `s` and `w` given below.
 
-```{r}
+```{r provide-vectors}
 s <- c(26, 50123, 456.12, 8, 0)
 w <- c(22, 50000, 451.00, 88, 0)
 ```
