@@ -45,8 +45,8 @@ mh_distance <- function(x, y){
     return(sum(number, na.rm = TRUE))
     }
   if (typeof(x) == "double"){
-    xchar = as.character(x)
-    ychar = as.character(y)
+    xchar = toString(x)
+    ychar = toString(y)
     x_list = strsplit(xchar, "")
     y_list = strsplit(ychar, "")
     x_vector = unlist(x_list)
@@ -55,20 +55,21 @@ mh_distance <- function(x, y){
     return(sum(number, na.rm = TRUE))
     }
   if (typeof(x) == "logical"){
-    if ((x & y == TRUE) || (x & y == FALSE)){
+    if (((x == TRUE) & (y == TRUE)) || ((x == FALSE) & (y == FALSE))){
       return (0)
       }
-    return(1)
+    else{
+      return(1)
     }
+  }
 }
-
 ```
 
 ## Task 2
 
 **Initial test cases** (return a non-negative modified Hamming distance)
 
-```{r}
+```{r provided-correct-tests}
 mh_distance(x = "abc", y = "abc")
 mh_distance(x = T, y = FALSE)
 mh_distance(x = "523890", y = "752839")
@@ -77,13 +78,16 @@ mh_distance(x = 2341, y = 2350)
 
 Added test cases that return a non-negative modified Hamming distance result.
 
-```{r}
-# additional test cases go here
+```{r correct-test-cases}
+mh_distance(x = 52, y = 43)
+mh_distance(x = "snack", y = "stash")
+mh_distance(x = TRUE, y = TRUE)
+mh_distance(x = "Hello!", y = "Hello?")
 ```
 
 **Initial test cases** (return values of `-1`)
 
-```{r eval=FALSE}
+```{r provided-incorrect-tests}
 mh_distance(x = 52, y = 113)
 mh_distance(x = "swimming", y = "winning")
 mh_distance(x = NA, y = TRUE)
@@ -120,7 +124,12 @@ mh_distance_vectorize <- function(s, w){
 }
 ```
 
+```{r test-vectorized}
+mh_distance_vectorize(s, w)
+```
 
 ## Task 4
 
-Brief write-up goes here...
+discuss how you handled possible invalid inputs;
+explain some of your code choices;
+describe any weaknesses with your code and resulting function.
