@@ -384,7 +384,7 @@ summary {
 <h2>Task 1</h2>
 <pre class="r"><code>mh_distance &lt;- function(x, y){
   if (typeof(x) != typeof(y)){
-    warning(&quot;x and y are not both logical, numeric, or character&quot;)
+    warning(&quot;x and y different vector types&quot;)
     return(-1)
     }
   if(is.na(x) == TRUE || is.na(y) == TRUE || 
@@ -402,7 +402,7 @@ summary {
     return(-1)}
   if ((is.numeric(x) == TRUE) &amp; (is.numeric(y) == TRUE)){
     if ((x %% 1 != 0) || (y %% 1 != 0)){
-      warning(&quot;x or y contains decimal values&quot;)
+      warning(&quot;x or y contains a decimal&quot;)
       return(-1)
     }
   }
@@ -467,7 +467,7 @@ same number of digits or letters</code></pre>
 <pre><code>Warning in mh_distance(x = NA, y = TRUE): x or y is NA or NaN</code></pre>
 <pre><code>[1] -1</code></pre>
 <pre class="r"><code>mh_distance(x = 1.5, y = 2.5)</code></pre>
-<pre><code>Warning in mh_distance(x = 1.5, y = 2.5): x or y contains decimal values</code></pre>
+<pre><code>Warning in mh_distance(x = 1.5, y = 2.5): x or y contains a decimal</code></pre>
 <pre><code>[1] -1</code></pre>
 <p>Added test cases that return a value of <code>-1</code>.</p>
 <pre class="r"><code>mh_distance(x = 78, y = 78.9)</code></pre>
@@ -479,8 +479,7 @@ digits or letters</code></pre>
 number of digits or letters</code></pre>
 <pre><code>[1] -1</code></pre>
 <pre class="r"><code>mh_distance(x = NA, y = NaN)</code></pre>
-<pre><code>Warning in mh_distance(x = NA, y = NaN): x and y are not both logical, numeric,
-or character</code></pre>
+<pre><code>Warning in mh_distance(x = NA, y = NaN): x and y different vector types</code></pre>
 <pre><code>[1] -1</code></pre>
 <pre class="r"><code>mh_distance(x = -Inf, y = Inf)</code></pre>
 <pre><code>Warning in mh_distance(x = -Inf, y = Inf): x or y is an infinite value</code></pre>
@@ -506,8 +505,8 @@ w &lt;- c(22, 50000, 451.00, 88, 0)</code></pre>
 </div>
 <div id="task-4" class="section level2">
 <h2>Task 4</h2>
-<p>This homework assignment was a bit challenging, but after some initial struggle, I managed to get the hang of it. To handle invalid inputs, I used if statements with warning messages. Throughout writing my code, one of my biggest challenges was keeping track of parentheses to ensure I would not run an error. To compare inputs, I used the strsplit() function to break apart words/numbers into individual components. I then unlisted them to turn each word into a vector of its letters.</p>
-<p>Initially, I planned to use a for loop to compare each input. I had a hard time getting this to work however and continued to use if statements instead. At first, the function worked fine with characters and boolean values. I had the most trouble when comparing doubles. For some reason, they would always output -1 instead of the correct modified Hamming distance but without an error message. I tested all of the steps on their own outside of the function and received the correct results, yet when the statement was in the function, it continued to output -1.</p>
+<p>This homework assignment was a bit challenging, but after some initial struggle, I managed to get the hang of it. To handle invalid inputs, I used if statements with warning messages. Throughout writing my code, one of my biggest challenges was keeping track of parentheses to ensure I would not run an error. In creating my code, I used the strsplit() function to break apart words/numbers into individual components to compare inputs. I then unlisted them to turn each word into a vector of its letters.</p>
+<p>Initially, I planned to use a for loop to compare each input. I had a hard time getting this to work however and continued to use if statements instead. At first, the function worked fine with characters and boolean values. I had the most trouble when comparing doubles. For some reason, they would always output -1 instead of the correct modified Hamming distance but without an error message. I restarted the entire code going step by step and ran it again. This time it worked! Not really sure what was different, but I’m running with it! My code could be improved during the section where I compare each character in x to its corresponding character in y. I think this area could be simplified with a for loop or the use of some different functions.</p>
 </div>
 
 

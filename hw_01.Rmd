@@ -14,7 +14,7 @@ knitr::opts_chunk$set(echo = TRUE, comment = NA)
 ```{r mh_distance_function}
 mh_distance <- function(x, y){
   if (typeof(x) != typeof(y)){
-    warning("x and y are not both logical, numeric, or character")
+    warning("x and y different vector types")
     return(-1)
     }
   if(is.na(x) == TRUE || is.na(y) == TRUE || 
@@ -32,7 +32,7 @@ mh_distance <- function(x, y){
     return(-1)}
   if ((is.numeric(x) == TRUE) & (is.numeric(y) == TRUE)){
     if ((x %% 1 != 0) || (y %% 1 != 0)){
-      warning("x or y contains decimal values")
+      warning("x or y contains a decimal")
       return(-1)
     }
   }
@@ -133,17 +133,19 @@ mh_distance_vectorize(s, w)
 This homework assignment was a bit challenging, but after some initial struggle,
 I managed to get the hang of it. To handle invalid inputs, I used if statements
 with warning messages. Throughout writing my code, one of my biggest challenges
-was keeping track of parentheses to ensure I would not run an error. To compare
-inputs, I used the strsplit() function to break apart words/numbers into
-individual components. I then unlisted them to turn each word into a vector of
-its letters.
+was keeping track of parentheses to ensure I would not run an error. In creating
+my code, I used the strsplit() function to break apart words/numbers into
+individual components to compare inputs. I then unlisted them to turn each word
+into a vector of its letters.
 
 Initially, I planned to use a for loop to compare each input. I had a hard
 time getting this to work however and continued to use if statements instead.
 At first, the function worked fine with characters and boolean values. I had
 the most trouble when comparing doubles. For some reason, they would always
 output -1 instead of the correct modified Hamming distance but without an error
-message. I tested all of the steps on their own outside of the function and
-received the correct results, yet when the statement was in the function, it
-continued to output -1.
+message. I restarted the entire code going step by step and ran it again. This
+time it worked! Not really sure what was different, but I'm running with it! 
+My code could be improved during the section where I compare each character in
+x to its corresponding character in y. I think this area could be simplified
+with a for loop or the use of some different functions.
 
