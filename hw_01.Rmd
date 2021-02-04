@@ -65,23 +65,6 @@ mh_distance <- function(x, y){
 }
 ```
 
-```{r}
-mh_distance(x = 2341, y = 2350)
-x = 2341
-xchar = as.character(x)
-x_list = strsplit(xchar, "")
-x_vector = unlist(x_list)
-
-y = 2350
-ychar = as.character(y)
-y_list = strsplit(ychar, "")
-y_vector = unlist(y_list)
-
-number_double = x_vector != y_vector
-print(sum(number_double))
-```
-
-
 ## Task 2
 
 **Initial test cases** (return a non-negative modified Hamming distance)
@@ -125,7 +108,7 @@ mh_distance(x = -Inf, y = Inf)
 
 Consider the pair of vectors `s` and `w` given below.
 
-```{r provide-vectors}
+```{r define-vectors}
 s <- c(26, 50123, 456.12, 8, 0)
 w <- c(22, 50000, 451.00, 88, 0)
 ```
