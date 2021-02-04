@@ -415,8 +415,8 @@ summary {
     return(sum(number, na.rm = TRUE))
     }
   if (typeof(x) == &quot;double&quot;){
-    xchar = toString(x)
-    ychar = toString(y)
+    xchar = as.character(x)
+    ychar = as.character(y)
     x_list = strsplit(xchar, &quot;&quot;)
     y_list = strsplit(ychar, &quot;&quot;)
     x_vector = unlist(x_list)
@@ -433,6 +433,21 @@ summary {
     }
   }
 }</code></pre>
+<pre class="r"><code>mh_distance(x = 2341, y = 2350)</code></pre>
+<pre><code>[1] -1</code></pre>
+<pre class="r"><code>x = 2341
+xchar = as.character(x)
+x_list = strsplit(xchar, &quot;&quot;)
+x_vector = unlist(x_list)
+
+y = 2350
+ychar = as.character(y)
+y_list = strsplit(ychar, &quot;&quot;)
+y_vector = unlist(y_list)
+
+number_double = x_vector != y_vector
+print(sum(number_double))</code></pre>
+<pre><code>[1] 2</code></pre>
 </div>
 <div id="task-2" class="section level2">
 <h2>Task 2</h2>
@@ -488,22 +503,23 @@ lengths</code></pre>
 <p>Consider the pair of vectors <code>s</code> and <code>w</code> given below.</p>
 <pre class="r"><code>s &lt;- c(26, 50123, 456.12, 8, 0)
 w &lt;- c(22, 50000, 451.00, 88, 0)</code></pre>
-<pre class="r"><code>mh_distance_vectorize &lt;- function(s, w){
-  for(i in 1:length(s)){
-    if(length(s) == length(w)){
-      paste0(&quot;The modified Hamming distance between &quot;, s[i], &quot; and &quot;, w[i],
-             &quot; is &quot;, mh_distance(s[i], w[i]))
+<pre class="r"><code>mh_distance_vectorize &lt;- function(a, b){
+  for(i in 1:length(a)){
+    if(nchar(a[i]) == nchar(b[i])){
+      print(paste0(&quot;The modified Hamming distance between &quot;, a[i], &quot; and &quot;, b[i],
+             &quot; is &quot;, mh_distance(a[i], b[i])))
     }
   }
 }</code></pre>
 <pre class="r"><code>mh_distance_vectorize(s, w)</code></pre>
-<pre><code>Warning in mh_distance(s[i], w[i]): x and y different character lengths
-
-Warning in mh_distance(s[i], w[i]): x and y different character lengths</code></pre>
+<pre><code>[1] &quot;The modified Hamming distance between 26 and 22 is -1&quot;
+[1] &quot;The modified Hamming distance between 50123 and 50000 is -1&quot;
+[1] &quot;The modified Hamming distance between 0 and 0 is -1&quot;</code></pre>
 </div>
 <div id="task-4" class="section level2">
 <h2>Task 4</h2>
-<p>discuss how you handled possible invalid inputs; explain some of your code choices; describe any weaknesses with your code and resulting function.</p>
+<p>This homework assignment was a bit challenging, but after some initial struggle, I managed to get the hang of it. To handle invalid inputs, I used if statements with warning messages. Throughout writing my code, one of my biggest challenges was keeping track of parentheses to ensure I would not run an error. To compare inputs, I used the strsplit() function to break apart words/numbers into individual components. I then unlisted them to turn each word into a vector of its letters.</p>
+<p>Initially, I planned to use a for loop to compare each input. I had a hard time getting this to work however and continued to use if statements instead. At first, the function worked fine with characters and boolean values. I had the most trouble when comparing doubles. For some reason, they would always output -1 instead of the correct modified Hamming distance but without an error message. I tested all of the steps on their own outside of the function and received the correct results, yet when the statement was in the function, it continued to output -1.</p>
 </div>
 
 

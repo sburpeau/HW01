@@ -45,8 +45,8 @@ mh_distance <- function(x, y){
     return(sum(number, na.rm = TRUE))
     }
   if (typeof(x) == "double"){
-    xchar = toString(x)
-    ychar = toString(y)
+    xchar = as.character(x)
+    ychar = as.character(y)
     x_list = strsplit(xchar, "")
     y_list = strsplit(ychar, "")
     x_vector = unlist(x_list)
@@ -64,6 +64,23 @@ mh_distance <- function(x, y){
   }
 }
 ```
+
+```{r}
+mh_distance(x = 2341, y = 2350)
+x = 2341
+xchar = as.character(x)
+x_list = strsplit(xchar, "")
+x_vector = unlist(x_list)
+
+y = 2350
+ychar = as.character(y)
+y_list = strsplit(ychar, "")
+y_vector = unlist(y_list)
+
+number_double = x_vector != y_vector
+print(sum(number_double))
+```
+
 
 ## Task 2
 
@@ -114,11 +131,11 @@ w <- c(22, 50000, 451.00, 88, 0)
 ```
 
 ```{r vectorized-mh-distance}
-mh_distance_vectorize <- function(s, w){
-  for(i in 1:length(s)){
-    if(length(s) == length(w)){
-      paste0("The modified Hamming distance between ", s[i], " and ", w[i],
-             " is ", mh_distance(s[i], w[i]))
+mh_distance_vectorize <- function(a, b){
+  for(i in 1:length(a)){
+    if(nchar(a[i]) == nchar(b[i])){
+      print(paste0("The modified Hamming distance between ", a[i], " and ", b[i],
+             " is ", mh_distance(a[i], b[i])))
     }
   }
 }
@@ -130,6 +147,20 @@ mh_distance_vectorize(s, w)
 
 ## Task 4
 
-discuss how you handled possible invalid inputs;
-explain some of your code choices;
-describe any weaknesses with your code and resulting function.
+This homework assignment was a bit challenging, but after some initial struggle,
+I managed to get the hang of it. To handle invalid inputs, I used if statements
+with warning messages. Throughout writing my code, one of my biggest challenges
+was keeping track of parentheses to ensure I would not run an error. To compare
+inputs, I used the strsplit() function to break apart words/numbers into
+individual components. I then unlisted them to turn each word into a vector of
+its letters.
+
+Initially, I planned to use a for loop to compare each input. I had a hard
+time getting this to work however and continued to use if statements instead.
+At first, the function worked fine with characters and boolean values. I had
+the most trouble when comparing doubles. For some reason, they would always
+output -1 instead of the correct modified Hamming distance but without an error
+message. I tested all of the steps on their own outside of the function and
+received the correct results, yet when the statement was in the function, it
+continued to output -1.
+
