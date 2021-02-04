@@ -13,10 +13,10 @@ knitr::opts_chunk$set(echo = TRUE, comment = NA)
 
 ```{r mh_distance_function}
 mh_distance <- function(x, y){
-  if(typeof(x) != typeof(y)){
-    warning("x and y different vector types")
+  if (typeof(x) != typeof(y)){
+    warning("x and y are not both logical, numeric, or character")
     return(-1)
-  }
+    }
   if(is.na(x) == TRUE || is.na(y) == TRUE || 
      is.nan(x) == TRUE || is.nan(y) == TRUE){
     warning("x or y is NA or NaN")
@@ -26,27 +26,27 @@ mh_distance <- function(x, y){
     warning("x or y is an infinite value")
     return(-1)
   }
-  if(nchar(x) != nchar(y) & 
-     typeof(x) != "logical"){
-    warning("x and y different character lengths")
-    return(-1)
+  if ((nchar(x) != nchar(y)) 
+      & (typeof(x) != "logical")){
+    warning("x and y do not have the same number of digits or letters")
+    return(-1)}
+  if ((is.numeric(x) == TRUE) & (is.numeric(y) == TRUE)){
+    if ((x %% 1 != 0) || (y %% 1 != 0)){
+      warning("x or y contains decimal values")
+      return(-1)
+    }
   }
-  if(is.numeric(x) == TRUE & is.numeric(y) == TRUE){
-    if(x %% 1 != 0 || y %% 1 != 0)
-    warning("x or y contains a decimal")
-    return(-1)
-  }
-   if (typeof(x) == "character"){
-     x_list = strsplit(x, "")
-     y_list = strsplit(y, "")
-     x_vector = unlist(x_list)
-     y_vector = unlist(y_list)
+  if (typeof(x) == "character"){
+    x_list = strsplit(x, "")
+    y_list = strsplit(y, "")
+    x_vector = unlist(x_list)
+    y_vector = unlist(y_list)
     number = x_vector != y_vector
     return(sum(number, na.rm = TRUE))
     }
   if (typeof(x) == "double"){
-    xchar = as.character(x)
-    ychar = as.character(y)
+    xchar = toString(x)
+    ychar = toString(y)
     x_list = strsplit(xchar, "")
     y_list = strsplit(ychar, "")
     x_vector = unlist(x_list)

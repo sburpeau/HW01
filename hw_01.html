@@ -383,10 +383,10 @@ summary {
 <div id="task-1" class="section level2">
 <h2>Task 1</h2>
 <pre class="r"><code>mh_distance &lt;- function(x, y){
-  if(typeof(x) != typeof(y)){
-    warning(&quot;x and y different vector types&quot;)
+  if (typeof(x) != typeof(y)){
+    warning(&quot;x and y are not both logical, numeric, or character&quot;)
     return(-1)
-  }
+    }
   if(is.na(x) == TRUE || is.na(y) == TRUE || 
      is.nan(x) == TRUE || is.nan(y) == TRUE){
     warning(&quot;x or y is NA or NaN&quot;)
@@ -396,27 +396,27 @@ summary {
     warning(&quot;x or y is an infinite value&quot;)
     return(-1)
   }
-  if(nchar(x) != nchar(y) &amp; 
-     typeof(x) != &quot;logical&quot;){
-    warning(&quot;x and y different character lengths&quot;)
-    return(-1)
+  if ((nchar(x) != nchar(y)) 
+      &amp; (typeof(x) != &quot;logical&quot;)){
+    warning(&quot;x and y do not have the same number of digits or letters&quot;)
+    return(-1)}
+  if ((is.numeric(x) == TRUE) &amp; (is.numeric(y) == TRUE)){
+    if ((x %% 1 != 0) || (y %% 1 != 0)){
+      warning(&quot;x or y contains decimal values&quot;)
+      return(-1)
+    }
   }
-  if(is.numeric(x) == TRUE &amp; is.numeric(y) == TRUE){
-    if(x %% 1 != 0 || y %% 1 != 0)
-    warning(&quot;x or y contains a decimal&quot;)
-    return(-1)
-  }
-   if (typeof(x) == &quot;character&quot;){
-     x_list = strsplit(x, &quot;&quot;)
-     y_list = strsplit(y, &quot;&quot;)
-     x_vector = unlist(x_list)
-     y_vector = unlist(y_list)
+  if (typeof(x) == &quot;character&quot;){
+    x_list = strsplit(x, &quot;&quot;)
+    y_list = strsplit(y, &quot;&quot;)
+    x_vector = unlist(x_list)
+    y_vector = unlist(y_list)
     number = x_vector != y_vector
     return(sum(number, na.rm = TRUE))
     }
   if (typeof(x) == &quot;double&quot;){
-    xchar = as.character(x)
-    ychar = as.character(y)
+    xchar = toString(x)
+    ychar = toString(y)
     x_list = strsplit(xchar, &quot;&quot;)
     y_list = strsplit(ychar, &quot;&quot;)
     x_vector = unlist(x_list)
@@ -444,10 +444,10 @@ summary {
 <pre class="r"><code>mh_distance(x = &quot;523890&quot;, y = &quot;752839&quot;)</code></pre>
 <pre><code>[1] 5</code></pre>
 <pre class="r"><code>mh_distance(x = 2341, y = 2350)</code></pre>
-<pre><code>[1] -1</code></pre>
+<pre><code>[1] 2</code></pre>
 <p>Added test cases that return a non-negative modified Hamming distance result.</p>
 <pre class="r"><code>mh_distance(x = 52, y = 43)</code></pre>
-<pre><code>[1] -1</code></pre>
+<pre><code>[1] 2</code></pre>
 <pre class="r"><code>mh_distance(x = &quot;snack&quot;, y = &quot;stash&quot;)</code></pre>
 <pre><code>[1] 3</code></pre>
 <pre class="r"><code>mh_distance(x = TRUE, y = TRUE)</code></pre>
@@ -456,28 +456,31 @@ summary {
 <pre><code>[1] 1</code></pre>
 <p><strong>Initial test cases</strong> (return values of <code>-1</code>)</p>
 <pre class="r"><code>mh_distance(x = 52, y = 113)</code></pre>
-<pre><code>Warning in mh_distance(x = 52, y = 113): x and y different character lengths</code></pre>
+<pre><code>Warning in mh_distance(x = 52, y = 113): x and y do not have the same number of
+digits or letters</code></pre>
 <pre><code>[1] -1</code></pre>
 <pre class="r"><code>mh_distance(x = &quot;swimming&quot;, y = &quot;winning&quot;)</code></pre>
-<pre><code>Warning in mh_distance(x = &quot;swimming&quot;, y = &quot;winning&quot;): x and y different
-character lengths</code></pre>
+<pre><code>Warning in mh_distance(x = &quot;swimming&quot;, y = &quot;winning&quot;): x and y do not have the
+same number of digits or letters</code></pre>
 <pre><code>[1] -1</code></pre>
 <pre class="r"><code>mh_distance(x = NA, y = TRUE)</code></pre>
 <pre><code>Warning in mh_distance(x = NA, y = TRUE): x or y is NA or NaN</code></pre>
 <pre><code>[1] -1</code></pre>
 <pre class="r"><code>mh_distance(x = 1.5, y = 2.5)</code></pre>
-<pre><code>Warning in mh_distance(x = 1.5, y = 2.5): x or y contains a decimal</code></pre>
+<pre><code>Warning in mh_distance(x = 1.5, y = 2.5): x or y contains decimal values</code></pre>
 <pre><code>[1] -1</code></pre>
 <p>Added test cases that return a value of <code>-1</code>.</p>
 <pre class="r"><code>mh_distance(x = 78, y = 78.9)</code></pre>
-<pre><code>Warning in mh_distance(x = 78, y = 78.9): x and y different character lengths</code></pre>
+<pre><code>Warning in mh_distance(x = 78, y = 78.9): x and y do not have the same number of
+digits or letters</code></pre>
 <pre><code>[1] -1</code></pre>
 <pre class="r"><code>mh_distance(x = &quot;fishy&quot;, y = &quot;fishes&quot;)</code></pre>
-<pre><code>Warning in mh_distance(x = &quot;fishy&quot;, y = &quot;fishes&quot;): x and y different character
-lengths</code></pre>
+<pre><code>Warning in mh_distance(x = &quot;fishy&quot;, y = &quot;fishes&quot;): x and y do not have the same
+number of digits or letters</code></pre>
 <pre><code>[1] -1</code></pre>
 <pre class="r"><code>mh_distance(x = NA, y = NaN)</code></pre>
-<pre><code>Warning in mh_distance(x = NA, y = NaN): x and y different vector types</code></pre>
+<pre><code>Warning in mh_distance(x = NA, y = NaN): x and y are not both logical, numeric,
+or character</code></pre>
 <pre><code>[1] -1</code></pre>
 <pre class="r"><code>mh_distance(x = -Inf, y = Inf)</code></pre>
 <pre><code>Warning in mh_distance(x = -Inf, y = Inf): x or y is an infinite value</code></pre>
@@ -497,9 +500,9 @@ w &lt;- c(22, 50000, 451.00, 88, 0)</code></pre>
   }
 }</code></pre>
 <pre class="r"><code>mh_distance_vectorize(s, w)</code></pre>
-<pre><code>[1] &quot;The modified Hamming distance between 26 and 22 is -1&quot;
-[1] &quot;The modified Hamming distance between 50123 and 50000 is -1&quot;
-[1] &quot;The modified Hamming distance between 0 and 0 is -1&quot;</code></pre>
+<pre><code>[1] &quot;The modified Hamming distance between 26 and 22 is 1&quot;
+[1] &quot;The modified Hamming distance between 50123 and 50000 is 3&quot;
+[1] &quot;The modified Hamming distance between 0 and 0 is 0&quot;</code></pre>
 </div>
 <div id="task-4" class="section level2">
 <h2>Task 4</h2>
